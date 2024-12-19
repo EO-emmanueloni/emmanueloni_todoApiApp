@@ -1,0 +1,376 @@
+#root {
+  max-width: 1280px;
+  margin:  20px;
+  padding: 2rem;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fff;
+  
+  border: 1px solid #f8c7d1;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0.3, 0.1);
+  padding: 20px;
+  background: #d9cfe2;
+  
+  
+
+}
+
+.app-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+ 
+
+}
+.nav-links {
+  display:inline-flex;
+  justify-content: center;
+  background: #fff;
+  border-radius:5px ;
+}
+
+.nav-links a {
+ 
+  font-size: 1.3rem;
+  margin: 5px;
+  color:blue;
+  text-decoration: none;
+}
+.profile-card {
+  max-width: 600px;
+  background-color: #fff;
+  margin: 0 auto;
+  border: 1px solid #f8c7d1;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+
+}
+
+.profile-card h2,h3 {
+  margin-bottom: 20px;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.profile-links a {
+  margin: 10px;
+  text-decoration: none;
+  color: blue;
+  background-color:#ccc;
+  padding: 7px;
+  border-radius: 5px;
+}
+
+/* Search Bar Styles */
+.search-bar {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+}
+
+.search-button {
+  padding: 8px 16px;
+  background-color: #646cff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 7px;
+}
+
+.search-button:hover {
+  background-color: #535bf2;
+}
+
+/* todo form */
+/* Add these new styles for CRUD functionality */
+.todo-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.submit-button {
+  background: #646cff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background: #535bf2;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button {
+  background: #4caf50;
+  color: white;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.delete-button {
+  background: #f44336;
+  color: white;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-button {
+  background: #2196f3;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.todo-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.todo-checkbox {
+  margin-right: 10px;
+}
+
+/* Todo List Styles */
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.todo-item {
+  margin: 8px 0;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+.todo-item:hover {
+  transform: translateX(5px);
+}
+
+.todo-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.todo-title {
+  flex: 1;
+  text-align: left;
+  margin-right: 16px;
+}
+
+.todo-status {
+  font-size: 0.9em;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.todo-status.completed {
+  color: #22c55e;
+}
+
+.todo-status.pending {
+  color: red;
+}
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+
+.pagination-button {
+  padding: 8px 16px;
+  background-color: #646cff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination-number {
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-number.active {
+  background-color: #646cff;
+  color: white;
+}
+
+/* Todo Details Styles */
+.todo-details {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.todo-details-card {
+  background-color: #f9f9f9;
+  padding: 24px;
+  border-radius: 8px;
+  margin-top: 20px;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+  padding: 8px 16px;
+  background-color: #646cff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.back-button:hover {
+  background-color: #535bf2;
+}
+
+/* Error and Loading States */
+.error-message {
+  color: #ef4444;
+  padding: 16px;
+  background-color: #fee2e2;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .todo-item {
+    background-color: #2a2a2a;
+  }
+  
+  .todo-link:hover {
+    background-color: #333333;
+  }
+  
+  .todo-details-card {
+    background-color: #2a2a2a;
+  }
+  
+  .pagination-number {
+    background-color: #2a2a2a;
+    color: white;
+  }
+  
+  .error-message {
+    background-color: #471818;
+    color: #fca5a5;
+  }
+}
+
+@media (max-width: 480px) {
+
+  #root{
+    width: 100%;
+  
+  }
+  .app-container, .profile-card, .todo-details {
+    padding: 10px;
+  }
+
+  .profile-links a {
+    font-size: 0.9em;
+    padding: 5px;
+  }
+
+  .search-input {
+    font-size: 0.9em;
+  }
+
+  .search-button {
+    font-size: 0.9em;
+  }
+
+  .todo-item {
+    font-size: 0.9em;
+  }
+
+  .pagination-button, .pagination-number {
+    font-size: 0.8em;
+    padding: 5px 10px;
+  }
+
+  .back-button {
+    font-size: 0.9em;
+    padding: 6px 12px;
+  }
+}
