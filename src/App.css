@@ -215,6 +215,10 @@
   margin-right: 16px;
 }
 
+.todo-details-card p {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
 .todo-status {
   font-size: 0.9em;
   padding: 4px 8px;
@@ -312,30 +316,6 @@
   color: #666;
 }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  .todo-item {
-    background-color: #2a2a2a;
-  }
-  
-  .todo-link:hover {
-    background-color: #333333;
-  }
-  
-  .todo-details-card {
-    background-color: #2a2a2a;
-  }
-  
-  .pagination-number {
-    background-color: #2a2a2a;
-    color: white;
-  }
-  
-  .error-message {
-    background-color: #471818;
-    color: #fca5a5;
-  }
-}
 
 @media (max-width: 480px) {
 

@@ -10,7 +10,7 @@ function Header() {
             
         </div>
 
-        <h2 className='profile-name'>Emmanuel Oni
+        <h2 className='profile-name'>Emmanuel Oni <br /> (ALT/SOE/024/1197)
             <a href="#"></a>
         </h2>
 
