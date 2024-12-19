@@ -3,8 +3,8 @@ import TodoList from '../components/TodoList';
 import TodoForm from '../components/TodoForm';
 import SearchBar from '../components/SearchBar';
 import Pagination from '../components/Pagination';
-import Header from './header';
-import Navbar from './Navbar';
+import Header from './Header';
+
 
 const API_URL = 'https://jsonplaceholder.typicode.com/todos';
 
