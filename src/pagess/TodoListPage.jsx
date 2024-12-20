@@ -4,8 +4,7 @@ import TodoForm from '../components/TodoForm';
 import SearchBar from '../components/SearchBar';
 import Pagination from '../components/Pagination';
 import { loadTodos, saveTodos } from '../hooks/LocalStorage';
-
-import Header from './header';
+import Header from './Header';
 
 const API_URL = 'https://jsonplaceholder.typicode.com/todos';
 
