@@ -100,7 +100,11 @@ export default function TodoListPage() {
       {showAddForm && (
         <TodoForm onSubmit={handleAddTodo} onCancel={() => setShowAddForm(false)} />
       )}
-      <button onClick={() => setShowAddForm(true)}>Add Todo</button>
+      <button style={{
+        padding: '10px',
+        backgroundColor: 'lightblue',
+        borderRadius: '5px',
+      }} onClick={() => setShowAddForm(true)}>Add Todo</button>
       <TodoList todos={paginateTodos()} />
       <Pagination
         currentPage={currentPage}
