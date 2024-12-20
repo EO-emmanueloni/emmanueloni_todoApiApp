@@ -5,7 +5,7 @@ function SearchBar({ searchQuery, onSearchChange, onSearch }) {
         <div className="search-bar">
           <input
             type="text"
-            placeholder="Search todos"
+            placeholder="Search todos (enter ID no or title)"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             className="search-input"
