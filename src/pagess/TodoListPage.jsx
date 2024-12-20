@@ -3,8 +3,8 @@ import TodoList from '../components/TodoList';
 import TodoForm from '../components/TodoForm';
 import SearchBar from '../components/SearchBar';
 import Pagination from '../components/Pagination';
-import { loadTodos, saveTodos } from '../hooks/LocalStorage';
 import Header from './Header';
+import { loadTodos, saveTodos } from '../hooks/LocalStorage';
 
 const API_URL = 'https://jsonplaceholder.typicode.com/todos';
 
@@ -20,12 +20,10 @@ export default function TodoListPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch from API
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error('Failed to fetch todos');
         const apiTodos = await response.json();
 
-        // Combine local todos with API todos, prioritizing local ones
         const localTodos = loadTodos();
         const combinedTodos = [
           ...localTodos,
@@ -38,7 +36,6 @@ export default function TodoListPage() {
         setFilteredTodos(combinedTodos);
       } catch (err) {
         console.error('Failed to fetch todos:', err);
-        // Use existing todos if API fails
         setFilteredTodos(todos);
       }
     };
@@ -51,13 +48,23 @@ export default function TodoListPage() {
     saveTodos(todos.filter(todo => todo.isLocal)); // Save only local todos
   }, [todos]);
 
+  const handleSearch = () => {
+    const filtered = todos.filter(
+      (todo) =>
+        todo.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        todo.id === parseInt(searchQuery)
+    );
+    setFilteredTodos(filtered);
+    setCurrentPage(1); // Reset to the first page after filtering
+  };
+
   const handleAddTodo = async (newTodo) => {
     const todoToAdd = {
       ...newTodo,
-      id: Date.now(), // Ensure unique ID
+      id: Date.now(),
       userId: 1,
       completed: false,
-      isLocal: true // Mark as local todo
+      isLocal: true
     };
 
     const updatedTodos = [todoToAdd, ...todos];
@@ -66,7 +73,6 @@ export default function TodoListPage() {
     setShowAddForm(false);
 
     try {
-      // Try to create todo in API (optional)
       await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -74,16 +80,7 @@ export default function TodoListPage() {
       });
     } catch (err) {
       console.error('Failed to sync with API:', err);
-      // Continue with local changes even if API fails
     }
-  };
-
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    const filtered = todos.filter(todo =>
-      todo.title.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredTodos(filtered);
   };
 
   const paginateTodos = () => {
@@ -94,16 +91,27 @@ export default function TodoListPage() {
   return (
     <div>
       <Header />
-      
-      <SearchBar value={searchQuery} onSearch={handleSearch} />
+      <SearchBar
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onSearch={handleSearch} // Pass the search handler
+      />
       {showAddForm && (
-        <TodoForm onSubmit={handleAddTodo} onCancel={() => setShowAddForm(false)} />
+        <TodoForm
+          onSubmit={handleAddTodo}
+          onCancel={() => setShowAddForm(false)}
+        />
       )}
-      <button style={{
-        padding: '10px',
-        backgroundColor: 'lightblue',
-        borderRadius: '5px',
-      }} onClick={() => setShowAddForm(true)}>Add Todo</button>
+      <button
+        style={{
+          padding: '10px',
+          backgroundColor: 'lightblue',
+          borderRadius: '5px',
+        }}
+        onClick={() => setShowAddForm(true)}
+      >
+        Add Todo
+      </button>
       <TodoList todos={paginateTodos()} />
       <Pagination
         currentPage={currentPage}
