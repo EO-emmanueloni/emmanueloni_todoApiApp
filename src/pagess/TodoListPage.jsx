@@ -1,64 +1,66 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import TodoList from '../components/TodoList';
 import TodoForm from '../components/TodoForm';
 import SearchBar from '../components/SearchBar';
 import Pagination from '../components/Pagination';
-import Header from './Header';
+import Header from '../pagess/Header';
 import { loadTodos, saveTodos } from '../hooks/LocalStorage';
+
 
 const API_URL = 'https://jsonplaceholder.typicode.com/todos';
 
 export default function TodoListPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [todos, setTodos] = useState(() => loadTodos()); // Initialize with localStorage
+  const [todos, setTodos] = useState([]);
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const todosPerPage = 10;
 
-  // Load todos from both API and localStorage
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error('Failed to fetch todos');
         const apiTodos = await response.json();
-
-        const localTodos = loadTodos();
+        
+        // Combine API todos with local todos
+        const localTodos = loadTodos() || [];
         const combinedTodos = [
           ...localTodos,
-          ...apiTodos.filter(apiTodo =>
+          ...apiTodos.filter(apiTodo => 
             !localTodos.some(localTodo => localTodo.id === apiTodo.id)
           )
         ];
-
+        
         setTodos(combinedTodos);
         setFilteredTodos(combinedTodos);
       } catch (err) {
-        console.error('Failed to fetch todos:', err);
-        setFilteredTodos(todos);
+        setError(err.message);
+        // If API fails, load local todos
+        const localTodos = loadTodos() || [];
+        setTodos(localTodos);
+        setFilteredTodos(localTodos);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  // Save todos to localStorage whenever they change
-  useEffect(() => {
-    saveTodos(todos.filter(todo => todo.isLocal)); // Save only local todos
-  }, [todos]);
-
   const handleSearch = () => {
-    const filtered = todos.filter(
-      (todo) =>
-        todo.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        todo.id === parseInt(searchQuery)
+    const filtered = todos.filter(todo => 
+      todo.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      todo.id === parseInt(searchQuery)
     );
     setFilteredTodos(filtered);
-    setCurrentPage(1); // Reset to the first page after filtering
+    setCurrentPage(1);
   };
 
-  const handleAddTodo = async (newTodo) => {
+  const handleAddTodo = (newTodo) => {
     const todoToAdd = {
       ...newTodo,
       id: Date.now(),
@@ -71,48 +73,53 @@ export default function TodoListPage() {
     setTodos(updatedTodos);
     setFilteredTodos(updatedTodos);
     setShowAddForm(false);
-
-    try {
-      await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(todoToAdd),
-      });
-    } catch (err) {
-      console.error('Failed to sync with API:', err);
-    }
+    
+    // Save to localStorage
+    const localTodos = loadTodos() || [];
+    saveTodos([...localTodos, todoToAdd]);
   };
 
-  const paginateTodos = () => {
-    const startIndex = (currentPage - 1) * todosPerPage;
-    return filteredTodos.slice(startIndex, startIndex + todosPerPage);
-  };
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
+
+  const paginatedTodos = filteredTodos.slice(
+    (currentPage - 1) * todosPerPage,
+    currentPage * todosPerPage
+  );
 
   return (
-    <div>
+    <div className="todo-list-page">
+      <h1>Todo List</h1>
+
       <Header />
+      
       <SearchBar
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        onSearch={handleSearch} // Pass the search handler
+        value={searchQuery}
+        onChange={setSearchQuery}
+        onSearch={handleSearch}
       />
+
+      <button 
+        className="add-todo-button"
+        onClick={() => setShowAddForm(true)}
+       style={{ marginBottom: '1rem',
+          padding: '0.5rem 1rem',
+          fontSize: '1rem',
+          backgroundColor: 'lightblue',
+          borderRadius: '5px',
+        }}> 
+        Add New Todo
+      </button>
+
       {showAddForm && (
         <TodoForm
           onSubmit={handleAddTodo}
           onCancel={() => setShowAddForm(false)}
         />
       )}
-      <button
-        style={{
-          padding: '10px',
-          backgroundColor: 'lightblue',
-          borderRadius: '5px',
-        }}
-        onClick={() => setShowAddForm(true)}
-      >
-        Add Todo
-      </button>
-      <TodoList todos={paginateTodos()} />
+
+      <TodoList todos={paginatedTodos} />
+      
       <Pagination
         currentPage={currentPage}
         totalItems={filteredTodos.length}

@@ -1,5 +1,4 @@
 
-
 function SearchBar({ searchQuery, onSearchChange, onSearch }) {
     return (
         <div className="search-bar">
